@@ -84,8 +84,7 @@ std::string CAbstractStreaming::TryLoadNonStreamedResource(std::string filepath,
     {
         auto it = std::find_if(this->raw_models.begin(), this->raw_models.end(),
             [&filename](const std::pair<std::string, const modloader::file *>& pair) {
-                auto model_filename = std::string(pair.second->filename());
-                return model_filename == filename;
+                return std::string(pair.second->filename()) == filename;
             });
 
         if(it != this->raw_models.end())
