@@ -82,7 +82,12 @@ std::string CAbstractStreaming::TryLoadNonStreamedResource(std::string filepath,
 
     if(!this->bHasInitializedStreaming)
     {
-        auto it = this->raw_models.find(filename);
+        auto it = std::find_if(this->raw_models.begin(), this->raw_models.end(),
+            [&filename](const std::pair<std::string, const modloader::file *>& pair) {
+                auto model_filename = std::string(pair.second->filename());
+                return model_filename == filename;
+            });
+
         if(it != this->raw_models.end())
         {
             // Log about non streamed resource and make sure it's unique
